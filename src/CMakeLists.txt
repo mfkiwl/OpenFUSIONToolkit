@@ -257,9 +257,11 @@ if(OFT_PACKAGE_BUILD)
         LINK_FLAGS "/WHOLEARCHIVE"
     )
   elseif (APPLE)
-    foreach(LIB IN LISTS OFT_LIBS OFT_STATIC_EXT)
+    foreach(LIB IN LISTS OFT_LIBS EXT_STATIC_LIBS)
       target_link_libraries( oft PRIVATE "-Wl,-force_load" ${LIB} )
     endforeach()
+    target_link_libraries( oft PRIVATE ${EXT_SHARED_LIBS} )
+    set( EXT_SHARED_LIBS "" )
   else ()
     target_link_libraries( oft PRIVATE "-Wl,-whole-archive" ${OFT_LIBS} ${EXT_STATIC_LIBS} "-Wl,-no-whole-archive" )
     # set_target_properties(oft PROPERTIES
